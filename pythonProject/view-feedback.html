@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>View Feedback - CobbleStones Lowell</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header>
+      <img src="logo.png" alt="CobbleStones Lowell Logo" id="logo" />
+      <h1>Feedback Details</h1>
+      <nav>
+        <a href="adminPortal.html">Back to Admin Portal/a>
+      </nav>
+    </header>
+    <main>
+      <section id="feedbackDetails">
+        <p>Loading feedback details...</p>
+      </section>
+    </main>
+    <script>
+      const feedbackDetails = document.getElementById("feedbackDetails");
+      const urlParams = new URLSearchParams(window.location.search);
+      const feedbackId = urlParams.get("id");
+
+      if (feedbackId) {
+        fetch(`http://127.0.0.1:5000/feedbacks/${feedbackId}`, {
+          method: "GET",
+        })
+          .then((response) => {
+            if (!response.ok) throw new Error("Failed to fetch feedback");
+            return response.json();
+          })
+          .then((data) => {
+            feedbackDetails.innerHTML = `
+              <h2>${data.name}</h2>
+              <p><strong>Email:</strong> ${data.email}</p>
+              <p><strong>Feedback:</strong> ${data.feedback}</p>
+              <p><strong>Submitted At:</strong> ${new Date(
+                data.created_at
+              ).toLocaleString()}</p>
+            `;
+          })
+          .catch((err) => {
+            feedbackDetails.innerHTML =
+              "<p>Error loading feedback details.</p>";
+            console.error(err);
+          });
+      } else {
+        feedbackDetails.innerHTML = "<p>No feedback ID provided.</p>";
+      }
+    </script>
+  </body>
+</html>

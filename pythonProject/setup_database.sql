@@ -1,0 +1,17 @@
+-- Create TABLES table
+CREATE TABLE TABLES (
+    TableID INTEGER PRIMARY KEY AUTOINCREMENT,
+    TableName TEXT,
+    TableNumber INTEGER UNIQUE,
+    NumberOfSeats INTEGER
+);
+
+-- Create RESERVATION_TABLES table
+CREATE TABLE RESERVATION_TABLES (
+    ReservationID INTEGER,
+    TableID INTEGER,
+    Status TEXT CHECK(Status IN ('ACTIVE', 'INACTIVE')),
+    PRIMARY KEY (ReservationID, TableID),
+    FOREIGN KEY (ReservationID) REFERENCES RESERVATIONS(ReservationID),
+    FOREIGN KEY (TableID) REFERENCES TABLES(TableID)
+);

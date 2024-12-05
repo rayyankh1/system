@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Feedbacks - CobbleStones Lowell</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header>
+      <img src="logo.png" alt="CobbleStones Lowell Logo" id="logo" />
+      <h1>Feedbacks</h1>
+      <nav>
+        <a href="index.html">Make a Reservation</a>
+        <a href="adminPortal.html">Admin Portal</a>
+        <a href="reservations-admin.html">Make a Reservation</a>
+        <a href="create-tables.html">Create Tables</a>
+      </nav>
+    </header>
+    <main>
+      <!-- Feedback Submission Form -->
+      <form id="feedbackForm">
+        <h2>Submit Feedback</h2>
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required /><br /><br />
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required /><br /><br />
+
+        <label for="feedback">Feedback:</label>
+        <textarea id="feedback" name="feedback" rows="4" required></textarea
+        ><br /><br />
+
+        <button type="submit">Submit Feedback</button>
+      </form>
+
+      <!-- Feedback List -->
+      <section>
+        <h2>All Feedbacks</h2>
+        <ul id="feedbackList">
+          <!-- Feedback links will be dynamically added here -->
+        </ul>
+        <div id="paginationControls">
+          <!-- Pagination buttons will be dynamically added here -->
+        </div>
+      </section>
+    </main>
+    <script src="feedbacks-admin.js"></script>
+  </body>
+</html>

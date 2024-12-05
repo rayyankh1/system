@@ -1,0 +1,113 @@
+/* Base Styles */
+body {
+    font-family: 'Arial', sans-serif;
+    background: #eee;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    min-height: 100vh;
+}
+
+header {
+    width: 100%;
+    background-color: #35424a;
+    padding: 20px 0;
+    text-align: center;
+    color: white;
+}
+
+#logo {
+    max-width: 100px;
+    height: auto;
+    margin-bottom: 10px;
+}
+
+main {
+    width: 90%;
+    max-width: 960px;
+    background: white;
+    margin: 20px;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Reservations Table Section */
+.reservations-container h2 {
+    color: #35424a;
+    font-size: 1.8em;
+}
+
+.reservations-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.reservations-table th,
+.reservations-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+.reservations-table th {
+    background-color: #f4f4f4;
+    color: #35424a;
+}
+
+.reservations-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+/* Availability Section */
+.availability-container h2 {
+    color: #35424a;
+    font-size: 1.8em;
+    margin-top: 40px;
+}
+
+#availability {
+    margin-top: 20px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    background-color: #f4f4f4;
+    border-radius: 8px;
+    font-size: 1em;
+}
+
+#availability div {
+    margin-bottom: 10px;
+    color: #333;
+}
+
+/* Feedback Section */
+.feedback-container h2 {
+    color: #35424a;
+    font-size: 1.8em;
+    margin-top: 40px;
+}
+
+#feedbackList {
+    margin-top: 20px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    background-color: #f4f4f4;
+    border-radius: 8px;
+    font-size: 1em;
+    list-style-type: disc;
+    padding-left: 20px;
+}
+
+#feedbackList li {
+    margin-bottom: 10px;
+    color: #333;
+}
+
+/* Utility Classes */
+.container {
+    padding: 20px;
+}

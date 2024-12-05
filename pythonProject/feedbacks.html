@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Feedbacks - CobbleStones Lowell</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+
+
+
+  <body>
+    <header>
+      <img src="logo.png" alt="CobbleStones Lowell Logo" id="logo" />
+      <h1>Feedbacks</h1>
+      <nav>
+        <a href="index.html">Home Page</a>
+        <a href="reservations.html">Make a Reservation</a>
+      </nav>
+    </header>
+    <main>
+      <!-- Thank You Section -->
+      <section id="thankYouMessage" style="display: none">
+        <h2>Thank You for Choosing CobbleStones Lowell!</h2>
+        <p>
+          We appreciate your reservation. Please take a moment to leave us your
+          feedback and let us know about your experience. Your insights help us
+          improve and serve you better!
+        </p>
+      </section>
+
+      <!-- Feedback Submission Form -->
+      <form id="feedbackForm">
+        <h2>Submit Feedback</h2>
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required /><br /><br />
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required /><br /><br />
+
+        <label for="feedback">Feedback:</label>
+        <textarea id="feedback" name="feedback" rows="4" required></textarea>
+        <br /><br />
+
+        <button type="submit">Submit Feedback</button>
+      </form>
+    </main>
+    <script>
+      // Check if redirected from a successful reservation
+      const urlParams = new URLSearchParams(window.location.search);
+      if (urlParams.get("success") === "true") {
+        document.getElementById("thankYouMessage").style.display = "block";
+      }
+
+      // Handle feedback form submission
+      document
+        .getElementById("feedbackForm")
+        .addEventListener("submit", function (event) {
+          event.preventDefault(); // Prevent default form submission
+
+          const feedbackData = {
+            name: document.getElementById("name").value,
+            email: document.getElementById("email").value,
+            feedback: document.getElementById("feedback").value,
+          };
+
+          fetch("http://127.0.0.1:5000/feedbacks", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(feedbackData),
+          })
+            .then((response) => {
+              if (!response.ok) {
+                throw new Error("Failed to submit feedback");
+              }
+              return response.json();
+            })
+            .then(() => {
+              alert("Feedback submitted successfully!");
+              document.getElementById("feedbackForm").reset();
+            })
+            .catch((err) => alert("Error submitting feedback: " + err));
+        });
+    </script>
+  </body>
+</html>
