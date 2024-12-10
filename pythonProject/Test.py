@@ -35,7 +35,7 @@ class TestReservationApp(unittest.TestCase):
             'time': '19:00',
             'guests': 4
         })
-        # Try adding another reservation at the same date/time
+
         response = self.client.post('/reservations', json={
             'name': 'Jane Doe',
             'phone': '0987654321',

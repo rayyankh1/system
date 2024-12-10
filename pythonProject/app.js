@@ -1,8 +1,8 @@
-// Handle reservation form submission
+// reservation form submission
 document.getElementById('reservationForm')?.addEventListener('submit', function(event) {
     event.preventDefault(); // Prevent default form submission
 
-    // Collect form data
+    // This is collecting form data
     const formData = {
         name: document.getElementById('name').value,
         phone: document.getElementById('phone').value,
@@ -12,7 +12,7 @@ document.getElementById('reservationForm')?.addEventListener('submit', function(
         guests: parseInt(document.getElementById('guests').value, 10)
     };
 
-    // Send POST request to the backend
+    // This is sending the request to the backend
     fetch('http://127.0.0.1:5000/reservations', {
         method: 'POST',
         headers: {
@@ -22,32 +22,32 @@ document.getElementById('reservationForm')?.addEventListener('submit', function(
     })
     .then(response => {
         if (!response.ok) {
-            // If there's an error, parse the error message
+
             return response.json().then(err => { throw new Error(err.error); });
         }
         return response.json();
     })
     .then(data => {
         alert('Reservation successful!');
-        window.location.href = 'thankyou.html'; // Redirect to thank you page
+        window.location.href = 'thankyou.html'; // This redirects the page to thank you
     })
     .catch(error => {
-        alert('Error: ' + error.message); // Show error message
+        alert('Error: ' + error.message);
     });
 });
 
-// Handle feedback form submission
+// This will handle feedback form submission
 document.getElementById('feedbackForm')?.addEventListener('submit', function(event) {
-    event.preventDefault(); // Prevent default form submission
+    event.preventDefault();
 
-    // Collect feedback data
+    // This collects the feedback data
     const feedbackData = {
-        name: document.getElementById('name').value, // Capture the customer's name
-        email: document.getElementById('email').value, // Capture the customer's email
+        name: document.getElementById('name').value,
+        email: document.getElementById('email').value,
         feedback: document.getElementById('feedback').value
     };
 
-    // Send POST request to the backend
+
     fetch('http://127.0.0.1:5000/feedbacks', {
         method: 'POST',
         headers: {
@@ -57,16 +57,16 @@ document.getElementById('feedbackForm')?.addEventListener('submit', function(eve
     })
     .then(response => {
         if (!response.ok) {
-            // If there's an error, parse the error message
+
             return response.json().then(err => { throw new Error(err.error); });
         }
         return response.json();
     })
     .then(data => {
         alert('Feedback submitted successfully!');
-        document.getElementById('feedbackForm').reset(); // Clear the form
+        document.getElementById('feedbackForm').reset();
     })
     .catch(error => {
-        alert('Error: ' + error.message); // Show error message
+        alert('Error: ' + error.message);
     });
 });

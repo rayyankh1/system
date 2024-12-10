@@ -1,4 +1,4 @@
-/* Base Styles */
+
 body {
     font-family: 'Arial', sans-serif;
     background: #eee;
@@ -35,7 +35,7 @@ main {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-/* Reservations Table Section */
+
 .reservations-container h2 {
     color: #35424a;
     font-size: 1.8em;
@@ -63,7 +63,7 @@ main {
     background-color: #f9f9f9;
 }
 
-/* Availability Section */
+
 .availability-container h2 {
     color: #35424a;
     font-size: 1.8em;
@@ -84,7 +84,7 @@ main {
     color: #333;
 }
 
-/* Feedback Section */
+
 .feedback-container h2 {
     color: #35424a;
     font-size: 1.8em;
@@ -107,7 +107,7 @@ main {
     color: #333;
 }
 
-/* Utility Classes */
+
 .container {
     padding: 20px;
 }

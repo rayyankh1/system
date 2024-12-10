@@ -16,17 +16,17 @@ CORS(app, resources={r"/*": {"origins": "*"}})
 # Models
 class Table(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    capacity = db.Column(db.Integer, nullable=False)  # Number of seats
+    capacity = db.Column(db.Integer, nullable=False)
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(80), unique=True, nullable=False)
-    password = db.Column(db.String(128), nullable=False)  # Encrypted password
+    password = db.Column(db.String(128), nullable=False)
     is_admin = db.Column(db.Boolean, default=False)
 
 class Reservation(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(80), nullable=False)  # Reserver's name
+    name = db.Column(db.String(80), nullable=False)  # name
     phone = db.Column(db.String(20), nullable=False)  # Phone number
     email = db.Column(db.String(120), nullable=False)  # Email address
     date = db.Column(db.Date, nullable=False)  # Reservation date
@@ -42,15 +42,15 @@ class ReservationTable(db.Model):
     table = db.relationship('Table', backref='reservation_times')
 
 class Feedback(db.Model):
-    id = db.Column(db.Integer, primary_key=True)  # Unique identifier
-    name = db.Column(db.String(80), nullable=False)  # Feedback giver's name
-    email = db.Column(db.String(120), nullable=False)  # Feedback giver's email
-    feedback = db.Column(db.Text, nullable=False)  # Feedback description
-    created_at = db.Column(db.DateTime, nullable=False, default=lambda: datetime.now(timezone.utc))  # Submission time
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(80), nullable=False)
+    email = db.Column(db.String(120), nullable=False)
+    feedback = db.Column(db.Text, nullable=False)
+    created_at = db.Column(db.DateTime, nullable=False, default=lambda: datetime.now(timezone.utc))
 
-# Routes
 
-#0 . Login
+
+
 
 @app.route('/login', methods=['POST'])
 def login():
@@ -70,7 +70,7 @@ def login():
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
-# 1. Return all tables
+# Return all tables
 @app.route('/tables', methods=['GET'])
 def get_all_tables():
     try:
@@ -82,37 +82,37 @@ def get_all_tables():
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
-# 2. Return available tables for a given date and time
+# Return available tables for a given date and time
 @app.route('/tables/available', methods=['GET'])
 def get_available_tables():
     try:
-        # Log raw incoming request
+
         print("Incoming Request Args:", request.args)
 
-        # Extract parameters
+
         date = request.args.get('date')
         start_time = request.args.get('start_time')
         end_time = request.args.get('end_time')
 
-        # Log extracted parameters
+
         print(f"Extracted Parameters -> Date: {date}, Start Time: {start_time}, End Time: {end_time}")
 
         if not date or not start_time or not end_time:
             return jsonify({'error': 'Date, start_time, and end_time parameters are required'}), 400
 
-        # Parse datetime
+
         reservation_date = datetime.strptime(date, '%Y-%m-%d').date()
         start_time = datetime.strptime(start_time, '%H:%M').time()
         end_time = datetime.strptime(end_time, '%H:%M').time()
 
-        # Log parsed parameters
+
         print(f"Parsed Parameters -> Reservation Date: {reservation_date}, Start Time: {start_time}, End Time: {end_time}")
 
-        # Fetch reserved tables
+
         reserved_table_ids = db.session.query(ReservationTable.table_id).join(Reservation).filter(
             Reservation.date == reservation_date,
             db.or_(
-                # Overlap 1: Existing reservation starts before the requested end time and ends after the requested start time
+
                 db.and_(Reservation.start_time < end_time, Reservation.end_time > start_time)
             )
         ).distinct().all()
@@ -204,7 +204,7 @@ def add_reservation():
         if overlapping_reservations:
             return jsonify({'error': 'Table is already reserved during the selected time'}), 400
 
-        # Create reservation and associate table
+
         reservation = Reservation(
             name=data['name'],
             phone=data['phone'],
@@ -228,7 +228,7 @@ def add_reservation():
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
-# 5. Return paginated feedbacks
+
 @app.route('/feedbacks', methods=['GET'])
 def get_feedbacks():
     try:
@@ -269,7 +269,7 @@ def add_feedback():
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
-# 7. Return a single feedback by ID
+
 @app.route('/feedbacks/<int:feedback_id>', methods=['GET'])
 def get_feedback_by_id(feedback_id):
     try:
@@ -289,11 +289,11 @@ def get_feedback_by_id(feedback_id):
 
 if __name__ == '__main__':
     with app.app_context():
-        # Drop all tables and recreate the database schema
+
         db.drop_all()
         db.create_all()
 
-        # Create the admin user if it doesn't exist
+
         if User.query.filter_by(username="rayyan").first() is None:
             admin_user = User(
                 username="rayyan",
@@ -304,7 +304,7 @@ if __name__ == '__main__':
             db.session.commit()
             print("Admin user created: rayyan")
 
-        # Seed tables with random capacities between 4 and 11
+
         if Table.query.count() == 0:
             for tid in range(1, 21):
                 random_capacity = random.randint(4, 11)
@@ -313,7 +313,7 @@ if __name__ == '__main__':
             db.session.commit()
             print("Tables seeded successfully.")
 
-        # Add a dummy feedback entry for testing
+
         if Feedback.query.count() == 0:
             dummy_feedback = Feedback(
                 name="Test User",
@@ -324,5 +324,5 @@ if __name__ == '__main__':
             db.session.commit()
             print("Dummy feedback added.")
 
-    # Run the Flask app in debug mode
+
     app.run(debug=True)

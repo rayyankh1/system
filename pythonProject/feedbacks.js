@@ -1,8 +1,8 @@
 const feedbackForm = document.getElementById("feedbackForm");
 
-// Handle feedback form submission
+
 function handleFeedbackSubmission(event) {
-  event.preventDefault(); // Prevent default form submission
+  event.preventDefault();
 
   const feedbackData = {
     name: document.getElementById("name").value,
@@ -23,12 +23,12 @@ function handleFeedbackSubmission(event) {
     })
     .then(() => {
       alert("Feedback submitted successfully!");
-      feedbackForm.reset(); // Clear the form
+      feedbackForm.reset();
     })
     .catch((err) => alert("Error submitting feedback: " + err));
 }
 
-// Attach event listeners
+
 document.addEventListener("DOMContentLoaded", () => {
   feedbackForm.addEventListener("submit", handleFeedbackSubmission);
 });

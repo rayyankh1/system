@@ -1,4 +1,4 @@
-// Function to populate the table dropdown with available tables
+
 function populateTableDropdown() {
   console.log("populateTableDropdown triggered");
 
@@ -6,7 +6,7 @@ function populateTableDropdown() {
   const startTime = document.getElementById("start_time").value;
   const endTime = document.getElementById("end_time").value;
 
-  // Fetch available tables from the backend
+
   fetch(
     `http://127.0.0.1:5000/tables/available?date=${date}&start_time=${startTime}&end_time=${endTime}`,
     { method: "GET" }
@@ -32,7 +32,7 @@ function populateTableDropdown() {
         return;
       }
 
-      // Populate dropdown with available tables
+
       data.forEach((table) => {
         const option = document.createElement("option");
         option.value = table.id;
@@ -46,9 +46,9 @@ function populateTableDropdown() {
     });
 }
 
-// Function to handle reservation form submission
+
 function handleReservationSubmission(event) {
-  event.preventDefault(); // Prevent default form submission behavior
+  event.preventDefault();
 
   const formData = {
     name: document.getElementById("name").value,
@@ -58,10 +58,10 @@ function handleReservationSubmission(event) {
     start_time: document.getElementById("start_time").value,
     end_time: document.getElementById("end_time").value,
     number_of_guests: parseInt(document.getElementById("guests").value, 10),
-    table_id: parseInt(document.getElementById("table_id").value, 10), // Selected table ID
+    table_id: parseInt(document.getElementById("table_id").value, 10),
   };
 
-  // Validate form inputs
+
   if (
     !formData.name ||
     !formData.phone ||
@@ -76,7 +76,7 @@ function handleReservationSubmission(event) {
     return;
   }
 
-  // Submit reservation data to the backend
+
   fetch("http://127.0.0.1:5000/reservations", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -93,7 +93,7 @@ function handleReservationSubmission(event) {
     .then(() => {
       alert("Reservation created successfully!");
 
-      // Redirect to the feedback page with a success message
+
       window.location.href = "feedbacks.html?success=true";
     })
     .catch((error) => {
@@ -102,21 +102,21 @@ function handleReservationSubmission(event) {
 }
 
 document.addEventListener("DOMContentLoaded", function () {
-  // Monitor changes for date, start time, and end time
+
   ["date", "start_time", "end_time"].forEach((id) => {
     document.getElementById(id)?.addEventListener("change", () => {
       const date = document.getElementById("date").value;
       const startTime = document.getElementById("start_time").value;
       const endTime = document.getElementById("end_time").value;
 
-      // Trigger dropdown population only when all fields are filled
+
       if (date && startTime && endTime) {
         populateTableDropdown();
       }
     });
   });
 
-  // Handle form submission
+
   document
     .getElementById("reservationForm")
     ?.addEventListener("submit", handleReservationSubmission);

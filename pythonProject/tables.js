@@ -1,11 +1,11 @@
-// Fetch and display all tables
+
 function fetchTables() {
   const tableList = document.getElementById("tableList");
 
   fetch("http://127.0.0.1:5000/tables", { method: "GET" })
     .then((response) => response.json())
     .then((data) => {
-      tableList.innerHTML = ""; // Clear the list
+      tableList.innerHTML = "";
       data.forEach((table) => {
         const li = document.createElement("li");
         li.textContent = `Table ${table.id} - Capacity: ${table.capacity}`;
@@ -15,9 +15,9 @@ function fetchTables() {
     .catch((err) => alert("Error fetching tables: " + err));
 }
 
-// Handle table creation form submission
+
 function handleCreateTable(event) {
-  event.preventDefault(); // Prevent default form submission
+  event.preventDefault();
 
   const capacity = parseInt(document.getElementById("capacity").value, 10);
 
@@ -34,15 +34,15 @@ function handleCreateTable(event) {
     })
     .then(() => {
       alert("Table created successfully!");
-      fetchTables(); // Refresh the table list
+      fetchTables();
     })
     .catch((err) => alert("Error creating table: " + err));
 }
 
-// Attach event listeners
+
 document.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById("createTableForm");
   form.addEventListener("submit", handleCreateTable);
 
-  fetchTables(); // Load tables on page load
+  fetchTables();
 });

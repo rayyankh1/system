@@ -1,10 +1,10 @@
-// Function to fetch and display all reservations
+
 function fetchReservations() {
   fetch("http://127.0.0.1:5000/reservations", { method: "GET" })
     .then((response) => response.json())
     .then((data) => {
       const tbody = document.querySelector("#reservationsTable tbody");
-      tbody.innerHTML = ""; // Clear any existing rows
+      tbody.innerHTML = "";
 
       data.forEach((reservation) => {
         const tr = document.createElement("tr");
@@ -26,13 +26,13 @@ function fetchReservations() {
     });
 }
 
-// Function to populate table dropdown with available tables
+
 function populateTableDropdown() {
   fetch("http://127.0.0.1:5000/tables/available", { method: "GET" })
     .then((response) => response.json())
     .then((data) => {
       const tableDropdown = document.getElementById("table_id");
-      tableDropdown.innerHTML = ""; // Clear existing options
+      tableDropdown.innerHTML = "";
 
       if (data.length === 0) {
         const option = document.createElement("option");
@@ -56,13 +56,13 @@ function populateTableDropdown() {
     });
 }
 
-// Function to fetch and display table availability
+
 function fetchTableAvailability() {
   fetch("http://127.0.0.1:5000/tables/available", { method: "GET" })
     .then((response) => response.json())
     .then((data) => {
       const availabilityContainer = document.getElementById("availability");
-      availabilityContainer.innerHTML = ""; // Clear any existing data
+      availabilityContainer.innerHTML = "";
 
       if (data.length === 0) {
         availabilityContainer.textContent =
@@ -82,13 +82,13 @@ function fetchTableAvailability() {
     });
 }
 
-// Function to fetch and display customer feedback
+
 function fetchFeedbacks() {
   fetch("http://127.0.0.1:5000/feedbacks", { method: "GET" })
     .then((response) => response.json())
     .then((data) => {
       const feedbackList = document.getElementById("feedbackList");
-      feedbackList.innerHTML = ""; // Clear existing feedback
+      feedbackList.innerHTML = "";
 
       if (data.length === 0) {
         const li = document.createElement("li");
@@ -109,11 +109,11 @@ function fetchFeedbacks() {
     });
 }
 
-// Function to handle reservation form submission
+
 document
   .getElementById("reservationForm")
   ?.addEventListener("submit", function (event) {
-    event.preventDefault(); // Prevent default form submission
+    event.preventDefault();
 
     const formData = {
       name: document.getElementById("name").value,
@@ -122,7 +122,7 @@ document
       date: document.getElementById("date").value,
       time: document.getElementById("time").value,
       guests: parseInt(document.getElementById("guests").value, 10),
-      table_id: parseInt(document.getElementById("table_id").value, 10), // Include selected table ID
+      table_id: parseInt(document.getElementById("table_id").value, 10),
     };
 
     fetch("http://127.0.0.1:5000/reservations", {
@@ -139,7 +139,7 @@ document
         return response.json();
       })
       .then((data) => {
-        // Redirect to Thank You page after successful reservation
+
         window.location.href = "thankyou.html";
       })
       .catch((error) => {
@@ -147,11 +147,11 @@ document
       });
   });
 
-// Function to handle feedback form submission
+
 document
   .getElementById("feedbackForm")
   ?.addEventListener("submit", function (event) {
-    event.preventDefault(); // Prevent default form submission
+    event.preventDefault();
 
     const feedbackData = {
       name: document.getElementById("name").value,
@@ -174,14 +174,14 @@ document
       })
       .then((data) => {
         alert("Thank you for your feedback!");
-        document.getElementById("feedbackForm").reset(); // Clear the form after submission
+        document.getElementById("feedbackForm").reset();
       })
       .catch((error) => {
         alert("Error: " + error.message);
       });
   });
 
-// Load data on page load
+
 document.addEventListener("DOMContentLoaded", function () {
   fetchReservations();
   fetchTableAvailability();
